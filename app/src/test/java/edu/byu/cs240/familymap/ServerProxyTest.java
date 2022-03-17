@@ -14,6 +14,14 @@ import result.ClearResult;
 import result.LoginResult;
 import result.RegisterResult;
 
+
+// Other Unit Tests:
+//        Calculates family relationships (i.e., spouses, parents, children)
+//        Filters events according to the current filter settings
+//        Chronologically sorts a person’s individual events (birth first, death last, etc.)
+//        Correctly searches for people and events (for your Search Activity)
+
+
 public class ServerProxyTest {
     private ServerProxy serverProxy;
     private RegisterResult registerResult;

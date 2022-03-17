@@ -1,171 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginFragment"
-    android:layout_margin="16dp"
-    android:stretchColumns="2">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
 
-    <TableRow>
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:gravity="end"
-            android:text="@string/serverHost"/>
-        <EditText
-            android:id="@+id/serverHostText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_span="2"
-            android:inputType="text"
-            tools:text="10.22.2" />
-    </TableRow>
-
-    <TableRow>
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:gravity="end"
-            android:text="@string/serverPort"/>
-        <EditText
-            android:id="@+id/serverPortText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_span="2"
-            android:inputType="number"
-            tools:text="8080" />
-    </TableRow>
-
-    <TableRow>
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:gravity="end"
-            android:text="@string/username"/>
-        <EditText
-            android:id="@+id/usernameText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_span="4"
-            android:inputType="text"
-            tools:text="Stan" />
-    </TableRow>
-
-    <TableRow>
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:gravity="end"
-            android:text="@string/password"/>
-        <EditText
-            android:id="@+id/passwordText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_span="4"
-            android:inputType="textPassword"
-            tools:text="Secrets" />
-    </TableRow>
-
-    <TableRow>
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:gravity="end"
-            android:text="@string/firstname"/>
-        <EditText
-            android:id="@+id/firstnameText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_span="4"
-            android:inputType="text"
-            tools:text="Stanton" />
-    </TableRow>
-
-    <TableRow>
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:gravity="end"
-            android:text="@string/lastname"/>
-
-        <EditText
-            android:id="@+id/lastnameText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_span="4"
-            android:inputType="text"
-            tools:text="Anthony" />
-
-    </TableRow>
-
-    <TableRow>
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:gravity="end"
-            android:text="@string/emailAddress"/>
-
-        <EditText
-            android:id="@+id/emailAddressText"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            android:layout_span="4"
-            android:inputType="textEmailAddress"
-            tools:text="jwilkerson@cs.byu.edu" />
-    </TableRow>
-
-    <TableRow>
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:gravity="end"
-            android:text="@string/gender"/>
-
-
-        <RadioGroup
-            android:id="@+id/genders"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/maleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/male"
-                />
-
-            <RadioButton
-                android:id="@+id/femaleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/female"
-                />
-        </RadioGroup>
-
-    </TableRow>
-
-    <LinearLayout
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingTop="20dp">
+        android:layout_height="match_parent"
+        tools:context=".LoginFragment"
+        android:layout_margin="16dp"
+        android:stretchColumns="2">
 
-        <Button
-            android:id="@+id/loginButton"
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loginButton" />
+        <TableRow>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:gravity="end"
+                android:text="@string/serverHost"/>
+            <EditText
+                android:id="@+id/serverHostText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:inputType="text"
+                tools:text="10.22.2" />
+        </TableRow>
 
-        <Button
-            android:id="@+id/registerButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/registerButton" />
-    </LinearLayout>
+        <TableRow>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:gravity="end"
+                android:text="@string/serverPort"/>
+            <EditText
+                android:id="@+id/serverPortText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:inputType="number"
+                tools:text="8080" />
+        </TableRow>
 
-</TableLayout>
+        <TableRow>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:gravity="end"
+                android:text="@string/username"/>
+            <EditText
+                android:id="@+id/usernameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="4"
+                android:inputType="text"
+                tools:text="Stan" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:gravity="end"
+                android:text="@string/password"/>
+            <EditText
+                android:id="@+id/passwordText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="4"
+                android:inputType="textPassword"
+                tools:text="Secrets" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:gravity="end"
+                android:text="@string/firstname"/>
+            <EditText
+                android:id="@+id/firstnameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="4"
+                android:inputType="text"
+                tools:text="Stanton" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:gravity="end"
+                android:text="@string/lastname"/>
+
+            <EditText
+                android:id="@+id/lastnameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="4"
+                android:inputType="text"
+                tools:text="Anthony" />
+
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:gravity="end"
+                android:text="@string/emailAddress"/>
+
+            <EditText
+                android:id="@+id/emailAddressText"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_span="4"
+                android:inputType="textEmailAddress"
+                tools:text="jwilkerson@cs.byu.edu" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:gravity="end"
+                android:text="@string/gender"/>
+
+
+            <RadioGroup
+                android:id="@+id/genders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/maleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male"
+                    />
+
+                <RadioButton
+                    android:id="@+id/femaleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/female"
+                    />
+            </RadioGroup>
+
+        </TableRow>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="20dp">
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loginButton" />
+
+            <Button
+                android:id="@+id/registerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/registerButton" />
+        </LinearLayout>
+    </TableLayout>
+</ScrollView>

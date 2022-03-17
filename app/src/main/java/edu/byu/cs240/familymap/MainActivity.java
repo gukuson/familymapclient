@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Lis
     @Override
     public void notifyLogin() {
         FragmentManager fragmentManager = this.getSupportFragmentManager();
-        Fragment fragment = new MapFragment();
+        Fragment fragment = new MapsFragment();
 
         fragmentManager.beginTransaction()
                 .replace(R.id.fragmentFrameLayout, fragment)

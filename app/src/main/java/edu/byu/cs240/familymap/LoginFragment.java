@@ -28,9 +28,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import request.LoginRequest;
+import request.RegisterRequest;
 import result.AllEventsResult;
 import result.AllPersonsResult;
 import result.LoginResult;
+import result.RegisterResult;
 
 public class LoginFragment extends Fragment {
 
@@ -40,6 +42,8 @@ public class LoginFragment extends Fragment {
     private Button loginButton, registerButton;
     private static final String LOG_TAG = "LoginFragment";
     private static final String LOGIN_RESULT_KEY = "LoginResultKey";
+    private static final String REGISTER_RESULT_KEY = "RegisterResultKey";
+    private String gender;
     //  create a textWatcher member
     private TextWatcher mTextWatcher = new TextWatcher() {
         @Override
@@ -58,6 +62,7 @@ public class LoginFragment extends Fragment {
     };
 
     void checkFieldsForEmptyValues(){
+
         String host = serverHostField.getText().toString();
         String port = serverPortField.getText().toString();
         String username = usernameField.getText().toString();
@@ -75,6 +80,12 @@ public class LoginFragment extends Fragment {
             if(firstname.equals("") || lastname.equals("") || email.equals("") || (!femaleButton.isChecked() && !maleButton.isChecked())){
                 registerButton.setEnabled(false);
             } else {
+//                Check if female or male clicked
+                if (femaleButton.isChecked()) {
+                    gender = "f";
+                }else {
+                    gender = "m";
+                }
                 registerButton.setEnabled(true);
             }
         }
@@ -107,19 +118,17 @@ public class LoginFragment extends Fragment {
 
         @Override
         public void run() {
-            Gson gson = new Gson();
             ServerProxy serverProxy = new ServerProxy(serverHost, serverPort);
 
             LoginResult result = serverProxy.login(loginRequest);
 
+//              if success get Data
             if (result.isSuccess()) {
                 dataCache.setAuthtoken(result.getAuthtoken());
                 dataCache.setUserPersonID(result.getPersonID());
 
                 GetDataTask task = new GetDataTask(serverProxy);
                 String loginOutput = task.fetchData();
-//                ExecutorService executor = Executors.newSingleThreadExecutor();
-//                executor.submit(task);
 
                 sendMessage(loginOutput);
             }else {
@@ -129,9 +138,6 @@ public class LoginFragment extends Fragment {
                 sendMessage(null);
             }
 
-//            sendMessage(gson.toJson(result));
-
-//              if success get Data
 
         }
 
@@ -146,11 +152,53 @@ public class LoginFragment extends Fragment {
         }
     }
 
+
     private static class RegisterTask implements Runnable {
+        private final Handler messageHandler;
+        private RegisterRequest registerRequest;
+        private String serverHost;
+        private String serverPort;
+        private DataCache dataCache = DataCache.getInstance();
+
+        public RegisterTask(Handler messageHandler, RegisterRequest request, String host, String port) {
+            this.messageHandler = messageHandler;
+            this.registerRequest = request;
+            this.serverHost = host;
+            this.serverPort = port;
+        }
 
         @Override
         public void run() {
+            ServerProxy serverProxy = new ServerProxy(serverHost, serverPort);
 
+            RegisterResult result = serverProxy.register(registerRequest);
+
+//              if success get Data
+            if (result.isSuccess()) {
+                dataCache.setAuthtoken(result.getAuthtoken());
+                dataCache.setUserPersonID(result.getPersonID());
+
+                GetDataTask task = new GetDataTask(serverProxy);
+                String registerOutput = task.fetchData();
+
+                sendMessage(registerOutput);
+            }else {
+                dataCache.setAuthtoken(null);
+                dataCache.setUserPersonID(null);
+                Log.e(LOG_TAG, result.getMessage());
+                sendMessage(null);
+            }
+
+        }
+
+        private void sendMessage(String result) {
+            Message message = Message.obtain();
+
+            Bundle messageBundle = new Bundle();
+            messageBundle.putString(REGISTER_RESULT_KEY, result);
+            message.setData(messageBundle);
+
+            messageHandler.sendMessage(message);
         }
     }
 
@@ -180,13 +228,6 @@ public class LoginFragment extends Fragment {
         }
 
     }
-
-
-//
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -218,7 +259,6 @@ public class LoginFragment extends Fragment {
         emailField.addTextChangedListener(mTextWatcher);
 
 //        Run check field for empty values for onclick
-//        femaleButton.setOnClickListener();
         RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.genders);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
@@ -243,35 +283,75 @@ public class LoginFragment extends Fragment {
                             public void handleMessage(Message message) {
                                 Bundle bundle = message.getData();
 
-                                Gson gson = new Gson();
                                 String loginOutput = bundle.getString(LOGIN_RESULT_KEY);
-//                                LoginResult loginResult = gson.fromJson(loginResultString, LoginResult.class);
                                 if (loginOutput != null) {
                                     Toast.makeText(getContext(),"Welcome " + loginOutput,Toast.LENGTH_LONG).show();
-//                                    listener.notifyLogin();
+                                    listener.notifyLogin();
                                 }else {
                                     Toast.makeText(getContext(),"Login Failed: Check inputs",Toast.LENGTH_LONG).show();
                                 }
                             }
                         };
+                    // Create and execute the login task on a separate thread
+                    String username = usernameField.getText().toString();
+                    String password = passwordField.getText().toString();
+                    String host = serverHostField.getText().toString();
+                    String port = serverPortField.getText().toString();
 
-                        // Create and execute the login task on a separate thread
-                        String username = usernameField.getText().toString();
-                        String password = passwordField.getText().toString();
-                        String host = serverHostField.getText().toString();
-                        String port = serverPortField.getText().toString();
+                    LoginRequest request = new LoginRequest(username, password);
 
-                        LoginRequest request = new LoginRequest(username, password);
-
-                        LoginTask task = new LoginTask(uiThreadMessageHandler, request, host, port);
-                        ExecutorService executor = Executors.newSingleThreadExecutor();
-                        executor.submit(task);
-
+                    LoginTask task = new LoginTask(uiThreadMessageHandler, request, host, port);
+                    ExecutorService executor = Executors.newSingleThreadExecutor();
+                    executor.submit(task);
                 }else {
                     System.out.println("Listener is null for login button");
                 }
             }
         });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Notifies mainactivity sign in button was clicked
+                if(listener != null) {
+                    // Create register background task
+                    // Set up a handler that will process messages from the task and make updates on the UI thread
+                    Handler uiThreadMessageHandler = new Handler() {
+                        @Override
+                        public void handleMessage(Message message) {
+                            Bundle bundle = message.getData();
+
+                            String registerOutput = bundle.getString(REGISTER_RESULT_KEY);
+                            if (registerOutput != null) {
+                                Toast.makeText(getContext(),"Welcome " + registerOutput,Toast.LENGTH_LONG).show();
+                                    listener.notifyLogin();
+                            }else {
+                                Toast.makeText(getContext(),"Register Failed (Username must be unique)",Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    };
+
+                    // Create and execute the register task on a separate thread
+                    String username = usernameField.getText().toString();
+                    String password = passwordField.getText().toString();
+                    String host = serverHostField.getText().toString();
+                    String port = serverPortField.getText().toString();
+                    String firstname = firstnameField.getText().toString();
+                    String lastname = lastnameField.getText().toString();
+                    String email = emailField.getText().toString();
+
+                    RegisterRequest request = new RegisterRequest(username, password, email, firstname, lastname, gender);
+
+                    RegisterTask task = new RegisterTask(uiThreadMessageHandler, request, host, port);
+                    ExecutorService executor = Executors.newSingleThreadExecutor();
+                    executor.submit(task);
+
+                }else {
+                    System.out.println("Listener is null for register button");
+                }
+            }
+        });
+
         return view;
     }
 
