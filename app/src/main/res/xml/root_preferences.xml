@@ -1,0 +1,67 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="false"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        android:key="@string/lifeStoryLines"
+        android:title="@string/lifeStoryTitle"
+        android:summary="@string/lifeStorySummary" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        android:key="@string/familyTreeLines"
+        android:title="@string/familyTreeTitle"
+        android:summary="@string/familyTreeSummary" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        android:key="@string/spouseLines"
+        android:title="@string/spouseTitle"
+        android:summary="@string/spouseSummary" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        android:key="@string/filterFatherSide"
+        android:title="@string/fatherSideTitle"
+        android:summary="@string/fatherSideSummary" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        android:key="@string/filterMotherSide"
+        android:title="@string/motherSideTitle"
+        android:summary="@string/motherSideSummary" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        android:key="@string/maleEvents"
+        android:title="@string/maleEventsTitle"
+        android:summary="@string/genderSummary" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        android:key="@string/femaleEvents"
+        android:title="@string/femaleEventsTitle"
+        android:summary="@string/genderSummary" />
+
+    <Preference
+        android:key="@string/logoutButton"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        android:title="Logout"
+        android:summary="Return to login screen"
+        />
+</PreferenceScreen>

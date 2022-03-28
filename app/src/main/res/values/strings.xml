@@ -14,6 +14,51 @@
     <string name="female">Female</string>
     <string name="loginButton">SIGN IN</string>
     <string name="registerButton">REGISTER</string>
+    <string name="searchIcon">Search</string>
+
+    <string name="settingIcon">Settings</string>
+    <string name="logoutButton">logoutButton</string>
+
+
+    <string name="lifeStoryLines">lifeStoryLines</string>
+    <string name="lifeStoryTitle">Life Story Lines</string>
+    <string name="lifeStorySummary">Show life story lines</string>
+    <string name="familyTreeLines">familyTreeLines</string>
+    <string name="familyTreeTitle">Family Tree Lines</string>
+    <string name="familyTreeSummary">Show family tree lines</string>
+    <string name="spouseLines">spouseLines</string>
+    <string name="spouseTitle">Spouse Lines</string>
+    <string name="spouseSummary">Show spouse lines</string>
+    <string name="filterFatherSide">filterFatherSide</string>
+    <string name="fatherSideTitle">Father\'s Side</string>
+    <string name="fatherSideSummary">Filter by father\'s side of family</string>
+    <string name="filterMotherSide">filterMotherSide</string>
+    <string name="motherSideTitle">Mother\'s Side</string>
+    <string name="motherSideSummary">Filter by mother\'s side of family</string>
+    <string name="maleEvents">maleEvents</string>
+    <string name="maleEventsTitle">Male Events</string>
+    <string name="genderSummary">Filter events based on gender</string>
+    <string name="femaleEvents">femaleEvents</string>
+    <string name="femaleEventsTitle">Female Events</string>
+
+
+
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 
 </resources>

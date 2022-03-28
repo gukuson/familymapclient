@@ -112,7 +112,7 @@ public class ServerProxy {
 //        return sb.toString();
 //    }
 
-    public void encode(Object request, OutputStream os) throws IOException {
+    private void encode(Object request, OutputStream os) throws IOException {
 //        Encode the request object to JSON string then into the request body, close output stream
         Writer reqBody = new OutputStreamWriter(os);
         gson.toJson(request, reqBody);
@@ -123,7 +123,7 @@ public class ServerProxy {
     }
 
     // If doesn't have request body, can pass null into request parameter
-    public Reader postRequestTry(String apiPath, String successMessage, Object request, boolean hasReqBody) throws IOException {
+    private Reader postRequestTry(String apiPath, String successMessage, Object request, boolean hasReqBody) throws IOException {
         // Create a URL indicating where the server is running, and which
         // web API operation we want to call from apiPath parameter
 
@@ -173,7 +173,7 @@ public class ServerProxy {
         return respBody;
     }
 
-    public Reader getRequestTry(String apiPath, String successMessage, String authtoken) throws IOException {
+    private Reader getRequestTry(String apiPath, String successMessage, String authtoken) throws IOException {
         // Create a URL indicating where the server is running, and which
         // web API operation we want to call from apiPath parameter
 

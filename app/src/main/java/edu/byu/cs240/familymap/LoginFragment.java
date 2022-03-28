@@ -3,6 +3,7 @@ package edu.byu.cs240.familymap;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -12,6 +13,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -202,15 +206,6 @@ public class LoginFragment extends Fragment {
         }
     }
 
-//    private static class GetDataTask implements Runnable {
-//        private DataCache dataCache = DataCache.getInstance();
-//
-//        @Override
-//        public void run() {
-//
-//        }
-//    }
-
     private static class GetDataTask {
         private DataCache dataCache = DataCache.getInstance();
         private ServerProxy serverProxy;
@@ -229,10 +224,25 @@ public class LoginFragment extends Fragment {
 
     }
 
+    // Make menu blank for login
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        System.out.println("Should clear icons");
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+
+
 
         // Set buttons to private members
         loginButton = view.findViewById(R.id.loginButton);
@@ -245,6 +255,13 @@ public class LoginFragment extends Fragment {
         serverPortField = (EditText) view.findViewById(R.id.serverPortText);
         usernameField = (EditText) view.findViewById(R.id.usernameText);
         passwordField = (EditText) view.findViewById(R.id.passwordText);
+
+        serverHostField.setText("10.0.2.2");
+        serverPortField.setText("8080");
+        usernameField.setText("username");
+        passwordField.setText("password");
+
+
         firstnameField = (EditText) view.findViewById(R.id.firstnameText);
         lastnameField = (EditText) view.findViewById(R.id.lastnameText);
         emailField = (EditText) view.findViewById(R.id.emailAddressText);

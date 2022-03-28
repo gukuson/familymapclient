@@ -8,6 +8,10 @@
         <entry key="app/src/main/res/layout/fragment_login_register.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_map.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/settings_activity.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/main_menu.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/no_icons.xml" value="0.2953125" />
+        <entry key="app/src/main/res/xml/root_preferences.xml" value="0.25" />
       </map>
     </option>
   </component>
