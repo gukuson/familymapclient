@@ -28,6 +28,7 @@ import model.Event;
 public class MapsFragment extends Fragment {
     private DataCache dataCache = DataCache.getInstance();
     private GoogleMap myGoogleMap;
+    private Settings currSettings;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -90,6 +91,11 @@ public class MapsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -120,21 +126,26 @@ public class MapsFragment extends Fragment {
         boolean showFemaleEvents = preferences.getBoolean(getString(R.string.femaleEvents), true);
         Settings settings = new Settings(lifeStoryLines, familyTreeLines, spouseLines, fatherSide, motherSide, showMaleEvents, showFemaleEvents);
 
-        googleMap.clear();
+        // If settings were changed
+        if (!settings.equals(currSettings)) {
+            googleMap.clear();
 
-        Set<Event> events = dataCache.getEventsWithSettings(settings);
-        if (events != null) {
-            for (Event event : events) {
-                float googleColor = dataCache.getColorForEvent(event);
-                LatLng location = new LatLng(event.getLatitude(), event.getLongitude());
-                Marker currMarker = googleMap.addMarker(new MarkerOptions()
-                        .title(event.getEventType())
-                        .snippet(event.getCity())
-                        .position(location)
-                        .icon(BitmapDescriptorFactory.defaultMarker(googleColor))
-                );
-                currMarker.setTag(event);
+            Set<Event> events = dataCache.getEventsWithSettings(settings);
+            if (events != null) {
+                for (Event event : events) {
+                    float googleColor = dataCache.getColorForEvent(event);
+                    LatLng location = new LatLng(event.getLatitude(), event.getLongitude());
+                    Marker currMarker = googleMap.addMarker(new MarkerOptions()
+                            .title(event.getEventType())
+                            .snippet(event.getCity())
+                            .position(location)
+                            .icon(BitmapDescriptorFactory.defaultMarker(googleColor))
+                    );
+                    currMarker.setTag(event);
+                }
+                System.out.println("Finished loop in addMarkers");
             }
+            currSettings = settings;
         }
     }
 

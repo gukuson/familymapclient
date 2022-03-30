@@ -264,7 +264,7 @@ public class DataCache {
 
             // Means male event filter is on (false), remove male events
             if (!settings.isMaleEvents()) {
-                filteredEvents = Sets.difference(filteredEvents, maleEvents);
+                filteredEvents.removeAll(maleEvents);
 //                for (Event event : filteredEvents) {
 //                    if (maleEvents.contains(event)) {
 //                        filteredEvents.remove(event);
@@ -273,7 +273,7 @@ public class DataCache {
             }
             // Means female event filter is on (false), remove female events
             if (!settings.isFemaleEvents()) {
-                filteredEvents = Sets.difference(filteredEvents, femaleEvents);
+                filteredEvents.removeAll(femaleEvents);
 //                for (Event event : filteredEvents) {
 //                    if (femaleEvents.contains(event)) {
 //                        filteredEvents.remove(event);
@@ -282,7 +282,7 @@ public class DataCache {
             }
             // Means father side filter is on (false), remove father's side of events
             if (!settings.isFatherSide()) {
-                filteredEvents = Sets.difference(filteredEvents, paternalEvents);
+                filteredEvents.removeAll(paternalEvents);
 //                for (Event event : filteredEvents) {
 //                    if (paternalEvents.contains(event)) {
 //                        filteredEvents.remove(event);
@@ -290,8 +290,8 @@ public class DataCache {
 //                }
             }
             // Means mother side filter is on (false), remove mother's side of events
-            if (!settings.isFatherSide()) {
-                filteredEvents = Sets.difference(filteredEvents, maternalEvents);
+            if (!settings.isMotherSide()) {
+                filteredEvents.removeAll(maternalEvents);
             }
             return filteredEvents;
         } else {
@@ -342,5 +342,11 @@ public class DataCache {
         return femaleEvents;
     }
 
+    public Set<Event> getPaternalEvents() {
+        return paternalEvents;
+    }
 
+    public Set<Event> getMaternalEvents() {
+        return maternalEvents;
+    }
 }

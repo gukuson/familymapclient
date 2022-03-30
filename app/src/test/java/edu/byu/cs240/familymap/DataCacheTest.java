@@ -14,7 +14,9 @@ import org.junit.*;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import model.Event;
 import model.Person;
@@ -131,15 +133,85 @@ public class DataCacheTest {
 
     @Test
     public void filterPass() {
+// Test Data Notes for Sheila:
+//        Total Events: 16
+//        Female Events: 10 (Sheila: 5, Betty: 1, Mrs. Jones: 2, Mrs. Rodham: 2)
+//        Male Events: 6 (Davis: 1, Blaine: 1, Frank Jones: 2,  Ken Rodham: 2)
+//        Maternal Events (includes Sheila and Davis (spouse) events): 11  (Betty and Jones’s)
+//        Paternal Events (includes Sheila and Davis (spouse) events): 11 (Blaine and Rodhams)
+//        Neither paternal nor maternal (Sheila and Davis (spouse) events): 6
+
         dataCache.cacheData(people.getData(), events.getData());
+        // Show all events
+        Settings settings = new Settings(true,true,true,true,true,true, true);
+        Set<Event> eventsExpect = new HashSet<>();
+        eventsExpect.addAll(dataCache.getEvents().values());
+
+        assertEquals(eventsExpect, dataCache.getEventsWithSettings(settings));
+        assertEquals(16, dataCache.getEventsWithSettings(settings).size());
+
+        // Female filter turned on, only male events
+        settings.setFemaleEvents(false);
+        assertEquals(dataCache.getMaleEvents(), dataCache.getEventsWithSettings(settings));
+        assertEquals(6, dataCache.getEventsWithSettings(settings).size());
+
+        // Male only turn on, only female events
+        settings.setFemaleEvents(true);
+        settings.setMaleEvents(false);
+        assertEquals(dataCache.getFemaleEvents(), dataCache.getEventsWithSettings(settings));
+        assertEquals(10, dataCache.getEventsWithSettings(settings).size());
+
+        // Female and male filter turned on, no returned events
+        settings.setFemaleEvents(false);
+        eventsExpect.clear();
+        assertEquals(eventsExpect, dataCache.getEventsWithSettings(settings));
+
+        // Father side filter turned on, only see mother's side and Sheila and spouse events
+        settings.setMaleEvents(true);
+        settings.setFemaleEvents(true);
+        settings.setFatherSide(false);
+        eventsExpect.addAll(dataCache.getMaternalEvents());
+        eventsExpect.addAll(dataCache.getEventsFor("Sheila_Parker"));
+        eventsExpect.addAll(dataCache.getEventsFor("Davis_Hyer"));
+        assertEquals(eventsExpect, dataCache.getEventsWithSettings(settings));
+        assertEquals(11, dataCache.getEventsWithSettings(settings).size());
+
+        // Mother side turned on, father's side only and Sheila and spouse events
+        settings.setFatherSide(true);
+        settings.setMotherSide(false);
+        eventsExpect.clear();
+        eventsExpect.addAll(dataCache.getPaternalEvents());
+        eventsExpect.addAll(dataCache.getEventsFor("Sheila_Parker"));
+        eventsExpect.addAll(dataCache.getEventsFor("Davis_Hyer"));
+        assertEquals(eventsExpect,dataCache.getEventsWithSettings(settings));
+        assertEquals(11, dataCache.getEventsWithSettings(settings).size());
+
+        // Both mother and father side on, only and Sheila and spouse events
+        settings.setFatherSide(false);
+        eventsExpect.clear();
+        eventsExpect.addAll(dataCache.getEventsFor("Sheila_Parker"));
+        eventsExpect.addAll(dataCache.getEventsFor("Davis_Hyer"));
+        assertEquals(eventsExpect,dataCache.getEventsWithSettings(settings));
+        assertEquals(6, dataCache.getEventsWithSettings(settings).size());
+
+        // Test if mother's side filter and female on, only show male event's on father side not sheila
+        // Show 4: (Davis: 1, Blaine: 1, Ken Rodham: 2)
+        settings.setFemaleEvents(false);
+        settings.setFatherSide(true);
+        eventsExpect.clear();
+        eventsExpect.addAll(dataCache.getEventsFor("Davis_Hyer"));
+        eventsExpect.addAll(dataCache.getEventsFor("Blaine_McGary"));
+        eventsExpect.addAll(dataCache.getEventsFor("Ken_Rodham"));
+        assertEquals(eventsExpect,dataCache.getEventsWithSettings(settings));
+        assertEquals(4, dataCache.getEventsWithSettings(settings).size());
 
     }
 
         /*
 Sheila "personID": "Sheila_Parker",
                  daughter of :
-                "fatherID": "Blaine_McGary",
-                "motherID": "Betty_White",
+                "fatherID": "Blaine_McGary", parents = Rodhams
+                "motherID": "Betty_White", parents = Jones'
 
        "personID": "Blaine_McGary", son of
                 "fatherID": "Ken_Rodham",
@@ -148,10 +220,6 @@ Sheila "personID": "Sheila_Parker",
 "personID": "Betty_White", daughter of
             "fatherID": "Frank_Jones",
             "motherID": "Mrs_Jones",
-
-"personID": "Patrick_Spencer",
-            "fatherID": "Happy_Birthday",
-            "motherID": "Golden_Boy"
 
          */
 

@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Lis
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
 
@@ -90,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Lis
                 Toast.makeText(this, "Clicked search", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.settingMenuItem:
-                Toast.makeText(this, "Clicked settings", Toast.LENGTH_SHORT).show();
                 Intent switchActivityIntent = new Intent(this, SettingsActivity.class);
                 startActivity(switchActivityIntent);
                 return true;

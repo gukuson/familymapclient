@@ -1,5 +1,12 @@
 package edu.byu.cs240.familymap;
 
+import androidx.annotation.Nullable;
+
+import java.util.Objects;
+import java.util.Set;
+
+import model.Person;
+
 public class Settings {
     private boolean lifeStoryLines;
     private boolean familyTreeLines;
@@ -73,5 +80,21 @@ public class Settings {
 
     public void setFemaleEvents(boolean femaleEvents) {
         this.femaleEvents = femaleEvents;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == null) {
+            return false;
+        } else if (!(obj instanceof Settings)) {
+            return false;
+        } else {
+            Settings settings = (Settings) obj;
+            return settings.isFatherSide() == this.isFatherSide() && settings.isFemaleEvents() == this.isFemaleEvents()
+                    && settings.isMaleEvents() == this.isMaleEvents() && settings.isMotherSide() == this.isMotherSide()
+                    && settings.isSpouseLines() == this.isSpouseLines() && settings.isLifeStoryLines() == this.isLifeStoryLines()
+                    && settings.isFamilyTreeLines() == this.isFamilyTreeLines();
+
+        }
     }
 }
