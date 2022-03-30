@@ -5,7 +5,6 @@ import org.junit.*;
 
 import static org.junit.Assert.*;
 
-import model.Person;
 import request.LoginRequest;
 import request.RegisterRequest;
 import result.AllEventsResult;

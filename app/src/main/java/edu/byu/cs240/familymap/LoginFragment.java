@@ -258,8 +258,8 @@ public class LoginFragment extends Fragment {
 
         serverHostField.setText("10.0.2.2");
         serverPortField.setText("8080");
-        usernameField.setText("username");
-        passwordField.setText("password");
+        usernameField.setText("sheila");
+        passwordField.setText("parker");
 
 
         firstnameField = (EditText) view.findViewById(R.id.firstnameText);

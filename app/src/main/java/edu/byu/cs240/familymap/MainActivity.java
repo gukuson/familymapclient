@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Lis
         MenuItem searchMenuItem = menu.findItem(R.id.searchMenuItem);
         MenuItem settingMenuItem = menu.findItem(R.id.settingMenuItem);
 
+        System.out.println("Before icons");
         searchMenuItem.setIcon(new IconDrawable(this, FontAwesomeIcons.fa_search)
                 .colorRes(R.color.white)
                 .actionBarSize());
