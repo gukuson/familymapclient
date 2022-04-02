@@ -51,6 +51,8 @@ public class DataCache {
     private String authtoken;
     private String userPersonID;
     private Person userPerson;
+    private Person clickedPerson;
+
     // PersonID or eventID for string
     private Map<String, Person> people = new HashMap<>();
     private Map<String, Event> events = new HashMap<>();
@@ -81,6 +83,10 @@ public class DataCache {
         return events.get(eventID);
     }
 
+    public Set<Event> getFilteredEvents() {
+        return filteredEvents;
+    }
+
     public List<Event> getEventsFor(String personID) {
         return personEvents.get(personID);
     }
@@ -93,18 +99,19 @@ public class DataCache {
         this.authtoken = null;
         this.userPersonID = null;
         this.userPerson = null;
+        this.clickedPerson = null;
         this.people.clear();
         this.events.clear();
-        markerColors.clear();
+        this.markerColors.clear();
         this.maleEvents.clear();
         this.femaleEvents.clear();
-        filteredEvents.clear();
+        this.filteredEvents.clear();
         this.personEvents.clear();
-        paternalAncestors.clear();
-        maternalAncestors.clear();
-        paternalEvents.clear();
-        maternalEvents.clear();
-        personChildren.clear();
+        this.paternalAncestors.clear();
+        this.maternalAncestors.clear();
+        this.paternalEvents.clear();
+        this.maternalEvents.clear();
+        this.personChildren.clear();
     }
 
     public float getColorForEvent(Event event) {
@@ -206,7 +213,6 @@ public class DataCache {
         } else {
             return null;
         }
-
     }
 
     private void calculateChildren() {
@@ -265,29 +271,14 @@ public class DataCache {
             // Means male event filter is on (false), remove male events
             if (!settings.isMaleEvents()) {
                 filteredEvents.removeAll(maleEvents);
-//                for (Event event : filteredEvents) {
-//                    if (maleEvents.contains(event)) {
-//                        filteredEvents.remove(event);
-//                    }
-//                }
             }
             // Means female event filter is on (false), remove female events
             if (!settings.isFemaleEvents()) {
                 filteredEvents.removeAll(femaleEvents);
-//                for (Event event : filteredEvents) {
-//                    if (femaleEvents.contains(event)) {
-//                        filteredEvents.remove(event);
-//                    }
-//                }
             }
             // Means father side filter is on (false), remove father's side of events
             if (!settings.isFatherSide()) {
                 filteredEvents.removeAll(paternalEvents);
-//                for (Event event : filteredEvents) {
-//                    if (paternalEvents.contains(event)) {
-//                        filteredEvents.remove(event);
-//                    }
-//                }
             }
             // Means mother side filter is on (false), remove mother's side of events
             if (!settings.isMotherSide()) {
@@ -348,5 +339,14 @@ public class DataCache {
 
     public Set<Event> getMaternalEvents() {
         return maternalEvents;
+    }
+
+
+    public Person getClickedPerson() {
+        return clickedPerson;
+    }
+
+    public void setClickedPerson(Person clickedPerson) {
+        this.clickedPerson = clickedPerson;
     }
 }

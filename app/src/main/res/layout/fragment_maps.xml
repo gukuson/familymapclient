@@ -16,12 +16,14 @@
         android:layout_weight="1"/>
 
     <LinearLayout
+        android:id="@+id/event_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="4"
         >
 
         <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/event_icon"
             android:text="@string/fa_android"
             android:layout_height="wrap_content"
             android:layout_width="0dp"

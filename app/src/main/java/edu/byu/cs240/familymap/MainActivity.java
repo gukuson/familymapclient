@@ -85,7 +85,8 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Lis
     public boolean onOptionsItemSelected(MenuItem menu) {
         switch(menu.getItemId()) {
             case R.id.searchMenuItem:
-                Toast.makeText(this, "Clicked search", Toast.LENGTH_SHORT).show();
+                Intent searchIntent = new Intent(this, SearchActivity.class);
+                startActivity(searchIntent);
                 return true;
             case R.id.settingMenuItem:
                 Intent switchActivityIntent = new Intent(this, SettingsActivity.class);
