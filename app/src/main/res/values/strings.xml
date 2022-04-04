@@ -46,11 +46,18 @@
     <string name="fa_android">{fa-android}</string>
     <string name="fa_female">{fa-female}</string>
     <string name="fa_male">{fa-male}</string>
+    <string name="fa_marker">{fa-map-marker}</string>
+
     <string name="initial_map_text">Click on a marker to see event details</string>
 
     <string name="person_title">Person Details</string>
     <string name="event_title">Event Map</string>
     <string name="search_title">Search</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="gender_noColon">Gender</string>
+    <string name="eventsTitle">LIFE EVENTS</string>
+    <string name="familyTitle">FAMILY</string>
 
 
 </resources>

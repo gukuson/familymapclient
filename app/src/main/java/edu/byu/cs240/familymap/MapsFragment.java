@@ -85,13 +85,11 @@ public class MapsFragment extends Fragment {
                         icon.setTextColor(getResources().getColor(R.color.pink));
                     }
                     // Update text bottom info
-                    StringBuilder currString = new StringBuilder(clickedPerson.getFirstName());
-                    currString.append(" ").append(clickedPerson.getLastName()).append("\n");
-                    currString.append(clickedEvent.getEventType());
-                    currString.append(": ");
-                    currString.append(clickedEvent.getCity());
-                    currString.append(", ").append(clickedEvent.getCountry());
-                    currString.append(" (").append(clickedEvent.getYear()).append(")");
+                    StringBuilder currString = new StringBuilder();
+
+                    currString.append(dataCache.getFullName(clickedPerson));
+                    currString.append("\n");
+                    currString.append(dataCache.eventToString(clickedEvent));
 
                     eventText.setText(currString);
 
@@ -118,6 +116,9 @@ public class MapsFragment extends Fragment {
     }
 
     private void resetEventDetails() {
+        clickedEvent = null;
+        clickedPerson = null;
+
         com.joanzapata.iconify.widget.IconTextView icon = getActivity().findViewById(R.id.event_icon);
         TextView eventText = getActivity().findViewById(R.id.mapTextView);
 
@@ -133,12 +134,17 @@ public class MapsFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
+
         LinearLayout eventInfo = view.findViewById(R.id.event_info);
         eventInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent switchActivityIntent = new Intent(getActivity(), PersonActivity.class);
-                startActivity(switchActivityIntent);
+                if (dataCache.getFilteredEvents().contains(clickedEvent)) {
+                    Intent switchActivityIntent = new Intent(getActivity(), PersonActivity.class);
+                    startActivity(switchActivityIntent);
+                }else {
+                    Toast.makeText(getContext(),"Please select a marker ",Toast.LENGTH_LONG).show();
+                }
             }
         });
 

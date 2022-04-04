@@ -1,22 +1,17 @@
 package edu.byu.cs240.familymap;
 
-import android.content.SharedPreferences;
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.common.collect.Sets;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import model.Event;
@@ -52,6 +47,7 @@ public class DataCache {
     private String userPersonID;
     private Person userPerson;
     private Person clickedPerson;
+    private Event clickedEvent;
 
     // PersonID or eventID for string
     private Map<String, Person> people = new HashMap<>();
@@ -100,6 +96,7 @@ public class DataCache {
         this.userPersonID = null;
         this.userPerson = null;
         this.clickedPerson = null;
+        this.clickedEvent = null;
         this.people.clear();
         this.events.clear();
         this.markerColors.clear();
@@ -231,6 +228,29 @@ public class DataCache {
         }
     }
 
+    public List<Person> getFamilyFor(String personID) {
+        Person currPerson = getPersonById(personID);
+        List<Person> family = new ArrayList<>();
+
+        Person [] parents = getParents(currPerson);
+        if (parents != null) {
+            assert parents.length == 2 : "Parent array wasn't 2";
+            family.add(parents[0]);
+            family.add(parents[1]);
+        }
+
+
+        if (currPerson.getSpouseID() != null) {
+            family.add(getPersonById(currPerson.getSpouseID()));
+        }
+
+        if (personChildren.containsKey(personID)) {
+            family.addAll(getChildrenFor(personID));
+        }
+
+        return family;
+    }
+
     private void calculateSides() {
         if (userPerson.getMotherID() != null) {
             addSides(userPerson.getMotherID(), maternalAncestors);
@@ -291,6 +311,32 @@ public class DataCache {
         }
     }
 
+    public String getFullName(Person clickedPerson) {
+        return clickedPerson.getFirstName() + " " + clickedPerson.getLastName();
+    }
+
+    public String eventToString(Event clickedEvent) {
+        return clickedEvent.getEventType() + ": " +
+                clickedEvent.getCity() +
+                ", " + clickedEvent.getCountry() +
+                " (" + clickedEvent.getYear() + ")";
+    }
+
+    public String getRelationshipBetween(Person clickedPerson, Person person) {
+        String personID = person.getPersonID();
+        String relationship;
+        if (Objects.equals(clickedPerson.getFatherID(), personID)) {
+            relationship = "Father";
+        }else if (Objects.equals(clickedPerson.getMotherID(), personID)) {
+            relationship = "Mother";
+        }else if (Objects.equals(clickedPerson.getSpouseID(), personID)) {
+            relationship = "Spouse";
+        }else {
+            relationship = "Child";
+        }
+        return relationship;
+    }
+
 
 
     public void setAuthtoken(String authtoken) {
@@ -348,5 +394,13 @@ public class DataCache {
 
     public void setClickedPerson(Person clickedPerson) {
         this.clickedPerson = clickedPerson;
+    }
+
+    public Event getClickedEvent() {
+        return clickedEvent;
+    }
+
+    public void setClickedEvent(Event clickedEvent) {
+        this.clickedEvent = clickedEvent;
     }
 }

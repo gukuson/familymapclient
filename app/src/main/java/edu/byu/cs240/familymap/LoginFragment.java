@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -295,7 +296,7 @@ public class LoginFragment extends Fragment {
                 if(listener != null) {
                     // Create login background task
                         // Set up a handler that will process messages from the task and make updates on the UI thread
-                        Handler uiThreadMessageHandler = new Handler() {
+                        Handler uiThreadMessageHandler = new Handler(Looper.myLooper()) {
                             @Override
                             public void handleMessage(Message message) {
                                 Bundle bundle = message.getData();
@@ -333,7 +334,7 @@ public class LoginFragment extends Fragment {
                 if(listener != null) {
                     // Create register background task
                     // Set up a handler that will process messages from the task and make updates on the UI thread
-                    Handler uiThreadMessageHandler = new Handler() {
+                    Handler uiThreadMessageHandler = new Handler(Looper.myLooper()) {
                         @Override
                         public void handleMessage(Message message) {
                             Bundle bundle = message.getData();
